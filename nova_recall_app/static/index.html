@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>NOVA Recall</title>
+<link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+<div class="shell">
+  <aside class="side">
+    <div class="brand"><div class="logo">N</div><div><b>NOVA Recall</b><span>Voice study coach</span></div></div>
+    <nav id="nav" aria-label="Sections"></nav>
+    <div class="sidefoot"><div id="tmPill" class="tmpill"></div><div id="status" role="status" aria-live="polite">Ready</div></div>
+  </aside>
+
+  <main>
+    <!-- QUIZ -->
+    <section class="view" id="v-quiz">
+      <header class="vhead"><div><h1>Quiz</h1><p>Questions made from your notes, read aloud. Answer out loud.</p></div>
+        <div class="vtools"><select id="mode" aria-label="Quiz mode"><option value="std">Standard</option><option value="mcq">Multiple choice</option><option value="exam">Timed exam</option></select><button id="demo">Run demo</button><button class="primary" id="start">Start session</button></div></header>
+      <div class="card stage">
+        <div class="meta"><span id="topic">Ready when you are</span><span id="counter"></span></div>
+        <div class="track"><i id="bar"></i></div>
+        <div id="demoBadge" class="badge" hidden>Demo: scripted answers</div>
+        <h2 id="question" class="question">Press Start session. NOVA reads each question aloud and listens for your answer.</h2>
+        <div class="pills" id="pills" aria-label="Key terms"></div>
+        <div class="listen"><div class="mic" id="mic" aria-hidden="true"></div><div id="heard" class="heard"></div></div>
+        <div id="feedback" class="fb" hidden></div>
+        <div class="actions"><button id="hint">Hint</button><button id="skip">Skip</button><button id="stop">Stop</button></div>
+        <form id="typed" class="typedf" autocomplete="off"><input id="typedIn" placeholder="Or type your answer and press Enter" aria-label="Type your answer"><button>Send</button></form>
+        <p class="cmds">You can say: hint, repeat, skip, I don't know, stop.</p>
+      </div>
+    </section>
+
+    <!-- ASSISTANT -->
+    <section class="view" id="v-assist" hidden>
+      <header class="vhead"><div><h1>Assistant</h1><p>Ask for the time, a calculation, a definition, a web search, a timer or a reminder.</p></div></header>
+      <div class="card">
+        <div class="listen"><button class="mic" id="aMic" aria-label="Speak a command"></button><div id="aHeard" class="heard">Click the mic and speak, or type below.</div></div>
+        <div id="log" aria-live="polite"></div>
+        <form id="aForm" class="typedf" autocomplete="off"><input id="aIn" placeholder="Try: what time is it / 12 times 8 / search for paging / who is Alan Turing / quiz me" aria-label="Command"><button>Ask</button></form>
+      </div>
+    </section>
+
+    <!-- FLASHCARDS -->
+    <section class="view" id="v-cards" hidden>
+      <header class="vhead"><div><h1>Flashcards</h1><p>Flip through your cards. Your answers feed the same review schedule.</p></div></header>
+      <div class="card">
+        <div class="meta"><span id="fcTopic"></span><span id="fcCount"></span></div>
+        <div id="fc" class="flip" tabindex="0" role="button" aria-label="Flip card"><span id="fcText"></span></div>
+        <div class="actions"><button id="fcPrev">Back</button><button id="fcFlip">Flip</button><button id="fcNext">Next</button><button class="primary" id="fcKnow">I knew it</button><button id="fcAgain">Study again</button></div>
+        <p class="cmds">Keys: space flips, arrow keys move between cards.</p>
+      </div>
+    </section>
+
+    <!-- TEACH IT BACK -->
+    <section class="view" id="v-teach" hidden>
+      <header class="vhead"><div><h1>Teach it back</h1><p>Explain a concept in your own words for about a minute. NOVA checks which key points you covered.</p></div>
+        <div class="vtools"><select id="tSel" aria-label="Concept"></select><button class="primary" id="tGo">Start explaining</button><button id="tDone">Finish</button></div></header>
+      <div class="card">
+        <div class="listen"><div class="mic" id="tMic" aria-hidden="true"></div><div id="tHeard" class="heard">Say "I'm done" or press Finish when you have explained it.</div></div>
+        <div class="pills" id="tPills"></div><p id="tOut" class="now"></p>
+        <form id="tForm" class="typedf" autocomplete="off"><input id="tIn" placeholder="Or type your explanation and press Enter" aria-label="Type your explanation"><button>Send</button></form>
+      </div>
+    </section>
+
+    <!-- VIVA -->
+    <section class="view" id="v-viva" hidden>
+      <header class="vhead"><div><h1>Viva simulator</h1><p>NOVA plays examiner: five questions, a timer, a follow-up on incomplete answers, then marks out of ten.</p></div>
+        <div class="vtools"><select id="vTopic" aria-label="Viva topic"></select><button class="primary" id="vGo">Start viva</button><button id="vStop">End viva</button></div></header>
+      <div class="card">
+        <div class="meta"><span id="vMeta">Examiner ready</span><span id="vTimer"></span></div>
+        <h2 id="vQ" class="question">Choose a topic and start the viva.</h2>
+        <div id="vHeard" class="heard"></div><div id="vOut"></div>
+        <form id="vForm" class="typedf" autocomplete="off"><input id="vIn" placeholder="Or type your answer and press Enter" aria-label="Type your answer"><button>Send</button></form>
+      </div>
+    </section>
+
+    <!-- HANDS-FREE -->
+    <section class="view" id="v-hands" hidden>
+      <header class="vhead"><div><h1>Hands-free</h1><p>Study without touching the keyboard.</p></div></header>
+      <div class="grid2">
+        <div class="card"><h3>Hey NOVA</h3><p class="note">Turn this on, then say "Hey NOVA, what time is it" or "Hey NOVA, quiz me". Keep this tab open.</p><div class="actions"><button id="wakeBtn">Turn on wake word</button></div><p id="wakeState" class="note"></p></div>
+        <div class="card"><h3>Revision audio</h3><p class="note">NOVA reads your notes aloud like a podcast and asks a quick question after every four cards.</p><div class="actions"><select id="raTopic" aria-label="Revision topic"></select><button class="primary" id="raGo">Play</button><button id="raStop">Stop</button></div><div id="raNow" class="now"></div><div id="raHeard" class="heard"></div></div>
+      </div>
+    </section>
+
+    <!-- DASHBOARD -->
+    <section class="view" id="v-dash" hidden>
+      <header class="vhead"><div><h1>Dashboard</h1><p>Your streak, accuracy and the topics that need work.</p></div></header>
+      <div class="card"><div id="dash"></div></div>
+    </section>
+
+    <!-- STUDY TOOLS -->
+    <section class="view" id="v-tools" hidden>
+      <header class="vhead"><div><h1>Study tools</h1><p>A focus timer, an exam countdown and spoken reminders.</p></div></header>
+      <div class="grid2">
+        <div class="card"><h3>Focus timer</h3><div id="tm" class="big">25:00</div><div class="actions"><input id="tmMin" type="number" value="25" min="1" max="120" aria-label="Focus minutes"><span class="note">minutes</span><button class="primary" id="tmGo">Start</button><button id="tmReset">Reset</button></div><p class="note">After each focus round NOVA announces a 5 minute break.</p></div>
+        <div class="card"><h3>Exam countdown</h3><div class="actions"><input id="exName" placeholder="Exam name"><input id="exDate" type="date" aria-label="Exam date"><button class="primary" id="exSet">Save</button></div><p id="exOut" class="now small"></p></div>
+        <div class="card wide"><h3>Reminders</h3><div class="actions"><input id="rmText" placeholder="Remind me to..."><input id="rmMin" type="number" value="10" min="1" aria-label="Minutes"><span class="note">minutes</span><button class="primary" id="rmAdd">Add</button></div><ul id="rmList" class="res"></ul><p class="note">Reminders are spoken aloud while this page stays open.</p></div>
+      </div>
+    </section>
+
+    <!-- NOTES -->
+    <section class="view" id="v-notes" hidden>
+      <header class="vhead"><div><h1>Notes</h1><p>Everything NOVA quizzes you on. Saved to <code>notes/my_notes.md</code> automatically.</p></div>
+        <div class="vtools"><button id="dictBtn">Dictate notes</button><button id="upBtn">Upload .txt / .md</button><button id="pdfBtn">Import PDF</button><input type="file" id="file" accept=".txt,.md" hidden><input type="file" id="pdfFile" accept=".pdf" hidden></div></header>
+      <div class="card">
+        <textarea id="notesText" spellcheck="false" aria-label="Notes"></textarea>
+        <p id="count" class="note"></p>
+        <p class="note">Formats: <code># Topic</code> headings, <code>Term: definition</code>, <code>Q:</code> / <code>A:</code> pairs, or any full sentence (it becomes a fill-in-the-blank). Dictate by saying a sentence, "new topic Networks", "define TCP as a reliable protocol", or "question what is DNS answer it maps names to addresses".</p>
+      </div>
+    </section>
+  </main>
+</div>
+<script src="static/app.js"></script>
+</body>
+</html>
